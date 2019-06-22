@@ -8,7 +8,7 @@ import {
 
 import axios from 'axios';
 
-export function* watcherSaga() {
+export default function* watcherSaga() {
   yield takeLatest(API_CALL_REQUEST, workerSaga);
 }
 

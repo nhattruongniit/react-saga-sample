@@ -8,7 +8,7 @@ const initialState = {
   error: null
 };
 
-export const reducer = (state = initialState, action) => {
+const reducer = (state = initialState, action) => {
   switch (action.type) {
     case API_CALL_REQUEST:
       return { 
@@ -31,3 +31,5 @@ export const reducer = (state = initialState, action) => {
       return state;
   }
 }
+
+export default reducer;

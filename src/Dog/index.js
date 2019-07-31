@@ -1,43 +1,62 @@
-import React from 'react';
+import React, { Component } from "react";
 
-import { connect } from 'react-redux';
+import { connect } from "react-redux";
 
-const Dog = ({ fetching, dog, error, onRequestDog, logo }) => (
-  <div className="App">
-    <header className="App-header">
-      <img src={dog || logo} className="App-logo" alt="logo" />
-      <h1 className="App-title">Welcome to Dog Saga</h1>
-    </header>
+class Dog extends Component {
+  state = {
+    dog: ""
+  };
 
-    {dog ? (
-      <p className="App-intro">Keep clicking for new dogs</p>
-    ) : (
-      <p className="App-intro">Replace the React icon with a dog!</p>
-    )}
+  static getDerivedStateFromProps(props, state) {
+    if (props.dog !== state.dog) {
+      return {
+        dog: props.dog
+      };
+    }
+  }
 
-    {fetching ? (
-      <button disabled>Fetching...</button>
-    ) : (
-      <button onClick={onRequestDog}>Request a Dog</button>
-    )}
+  render() {
+    const { dog } = this.state;
+    const { fetching, error, onRequestDog, logo } = this.props;
 
-    {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+    return (
+      <div className="App">
+        <header className="App-header">
+          <img src={dog || logo} className="App-logo" alt="logo" />
+          <h1 className="App-title">Welcome to Dog Saga</h1>
+        </header>
 
-  </div>
-)
+        {dog ? (
+          <p className="App-intro">Keep clicking for new dogs</p>
+        ) : (
+          <p className="App-intro">Replace the React icon with a dog!</p>
+        )}
 
-const mapStateToProps = ({
-  dog: { fetching, dog, error }
-}) => ({
-  fetching,
-  dog,
-  error,
-})
+        {fetching ? (
+          <button disabled>Fetching...</button>
+        ) : (
+          <button onClick={onRequestDog}>Request a Dog</button>
+        )}
 
-const mapDispatchToProps = dispatch => {
-  return {
-    onRequestDog: () => dispatch({ type: 'API_CALL_REQUEST' })
+        {error && <p style={{ color: "red" }}>Uh oh - something went wrong!</p>}
+      </div>
+    );
   }
 }
 
-export default connect(mapStateToProps, mapDispatchToProps)(Dog);
+const mapStateToProps = ({ dog: { fetching, dog, error } }) => ({
+  fetching,
+  dog,
+  error
+});
+
+const mapDispatchToProps = dispatch => {
+  return {
+    onRequestDog: () => dispatch({ type: "API_CALL_REQUEST" })
+  };
+};
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps
+)(Dog);

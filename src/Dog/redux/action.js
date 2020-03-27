@@ -26,9 +26,9 @@ function* workerSaga() {
 }
 
 // watcher saga with takeLatest Effects
-// export default function* watcherSagaTakeLatest() {
-//   yield takeLatest(API_CALL_REQUEST, workerSaga);
-// }
+export default function* watcherSagaTakeLatest() {
+  yield takeLatest(API_CALL_REQUEST, workerSaga);
+}
 
 // watcher saga with take Effects
 // export default function* watcherSagaTake() {
@@ -38,19 +38,19 @@ function* workerSaga() {
 // }
 
 // watcher saga with Race Effect
-export default function* watcherSagaRace() {
-  yield take(API_CALL_REQUEST);
-  let finished = false;
-  while (!finished) {
-    const { url, timeout } = yield race({
-      url: call(fetchDog),
-      timeout: delay(5000)
-    });
-    const dog = url.data.message;
-    if (!timeout) {
-      finished = true;
-      yield put({ type: API_CALL_SUCCESS, dog });
-    }
-    console.log(finished, dog, timeout);
-  }
-}
+// export default function* watcherSagaRace() {
+//   yield take(API_CALL_REQUEST);
+//   let finished = false;
+//   while (!finished) {
+//     const { url, timeout } = yield race({
+//       url: call(fetchDog),
+//       timeout: delay(5000)
+//     });
+//     const dog = url.data.message;
+//     if (!timeout) {
+//       finished = true;
+//       yield put({ type: API_CALL_SUCCESS, dog });
+//     }
+//     console.log(finished, dog, timeout);
+//   }
+// }
